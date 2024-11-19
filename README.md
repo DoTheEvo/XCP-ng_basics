@@ -15,14 +15,16 @@ Opensource.
 ![logo](https://i.imgur.com/EuRpfe1.png)
 
 Unlike esxi or proxmox to which you connect easily after fresh install,
-xcpng is just a xen server without any gui.<br>
-You need to deploy XO - Xen Orchestra somewhere which then manages that xcpng install.
+xcpng used to be just a xen server without any gui.<br>
+They are now adding some XO Lite, but one can as well skip it
+and from the get-go plan to deploy Xen Orchestra somewhere for the managment
+of all xcpng servers.
 
-* you install xcpng on to a machine.
-* unlike esxi or proxmox there is no webgui running on that machine that you connect to
-* you have to deploy ,
-  which connects to that xcpng install and allows you full managmnet.
-* you can deploy docker
+Options are:
+
+* **docker** container - if you have docker host you can easily deploy XO there
+* **a VM** - in any hypervisor spin up a debian and run a install script
+* **XCP-ng Center** - windows desktop application
 
 
 <details>
