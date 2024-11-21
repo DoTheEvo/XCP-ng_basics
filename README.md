@@ -30,10 +30,10 @@ Options are:
 <details>
 <summary><h3>XO running as a docker container</h3></summary>
 
+* [ronivay github](https://github.com/ronivay/xen-orchestra-docker)
+
 `compose.yml`
 ```yml
-version: '3'
-
 services:
 
   xen-orchestra:
@@ -66,7 +66,6 @@ networks:
   default:
     name: $DOCKER_MY_NETWORK
     external: true
-
 ```
 
 `.env`
@@ -106,6 +105,12 @@ Not recommended.
 
 `admin@admin.net` // `admin`
 
+* add server
+  * label whatever
+  * ip addres 
+  * root / password
+  * check - allow unauthorized certificates
+
 ### Create DVD ISO storage
 
 * New > Storage > Select host
@@ -118,6 +123,18 @@ afterwards to upload an iso
 
 * Import > Disk 
 * To SR: `ISOs`
+
+### Spin a new VM
+
+Arch Linux 
+
+* New > VM
+* Generic Linux UEFI
+* vCPU, RAM, 1socket
+* iso
+* network default
+* disks - change name, size
+*  
 
 ### guest additions
 
@@ -140,19 +157,24 @@ https://xcp-ng.org/docs/guests.html#windows
 
 # Passthrough
 
-[lawrance video](https://www.youtube.com/watch?v=KIhyGvuCDcc)
+Recent version made it super easy.
 
-## intel igpu passthrough
+#### intel igpu passthrough
 
 * XO webgui
-* Home > Hosts > Advanced > PCI Devices
-* enable slidder next to VGA compatible controller
-* reboot the host
+* Home > Hosts > the-host > Advanced > PCI Devices<br>
+  enable slidder next to VGA compatible controller
+* reboot the host, afterwards go check if the slider is on
 * Home > VMs > Advanced ><br>
   at the end is `Attach PCIs` button, there should be igpu listed.
 
+Tested with jellyfin and enabled transcoding,
+monitored with btop and intel_gpu_htop.
 
----
+<details>
+<summary><h5>The old way - cli passthrough</h5></summary>
+
+[lawrance video](https://www.youtube.com/watch?v=KIhyGvuCDcc)
 
 * ssh in on to xcpng host
 * `lspci -D` list the devices that can be passthrough
@@ -170,7 +192,7 @@ https://xcp-ng.org/docs/guests.html#windows
 
 After reboot of the VM I had igpu in and successfully used it in jellyfin.
 
-Useful commands were:
+</details>
 
 
 # Backups 
