@@ -111,6 +111,10 @@ Not recommended.
   * root / password
   * check - allow unauthorized certificates
 
+### Updates
+
+* Home > Pools > <your host> > Patches
+
 ### Create DVD ISO storage
 
 * New > Storage > Select host
@@ -153,8 +157,6 @@ https://xcp-ng.org/docs/guests.html#windows
 * `sudo systemctl enable --now xe-linux-distribution.service`
 
 
-
-
 # Passthrough
 
 Recent version made it super easy.
@@ -193,6 +195,10 @@ monitored with btop and intel_gpu_htop.
 After reboot of the VM I had igpu in and successfully used it in jellyfin.
 
 </details>
+
+#### opnsense as VM in xcpng
+
+[Setup here](https://github.com/DoTheEvo/selfhosted-apps-docker/tree/master/opnsense#xcp-ng)
 
 
 # Backups 
