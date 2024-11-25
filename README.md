@@ -95,7 +95,7 @@ https://forums.lawrencesystems.com/t/how-to-build-xen-orchestra-from-sources-202
 
 [Windows executable tool.](https://github.com/xcp-ng/xenadmin)
 
-Not recommended.
+Vibe is that its kinda abandoned. 
 
 </details>
 
@@ -107,13 +107,13 @@ Not recommended.
 
 * add server
   * label whatever
-  * ip addres 
+  * ip address 
   * root / password
   * check - allow unauthorized certificates
 
 ### Updates
 
-* Home > Pools > <your host> > Patches
+* Home > Pools > your-host > Patches
 
 ### Create DVD ISO storage
 
@@ -149,7 +149,10 @@ https://xcp-ng.org/docs/guests.html#windows
 * github ng opernsoruce version<br>
   https://github.com/xcp-ng/win-pv-drivers/releases
 * citrix closed source<br>
-  Advanced > Manage Citrix PV drivers via Windows Update
+  Advanced > Manage Citrix PV drivers via Windows Update<br>
+  but still requires hunt for agent app or something
+
+I use the version `8.2.2.200-RC1` from github.
 
 #### Arch
 
