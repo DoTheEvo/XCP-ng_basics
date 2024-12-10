@@ -6,17 +6,34 @@
 
 # Purpose & Overview
 
-A type 1 hypervisor based around Xen to host virtual machines.<br>
-An alternative to vmware esxi, or proxmox, or hyper-v.<br>
-Opensource. 
+An opensource virtualization platform build around
+[Xen](https://en.wikipedia.org/wiki/Xen) a type 1 **hypervisor**.<br>
+An alternative to vmware esxi/vsphere, or hyper-v, or proxmox.
+
+Xen itself is now developed by **Linux Foundation** with backing from
+intel, amd, arm, aws, google, alibaba cloud, huawei,... 
+previously Citrix stood behind the project before opening it.
+
+### the components
+
+* **xen** - the hypervisor, developed by Linux Foundation
+* **xcpng** - a single purpose linux distro preconfigured with xen
+* **XO** - Xen Orchestra - an opensource web interface for centralized managment
+  of xcpng servers, can be deployed as a container or a virtual machine
+* **XOA** - Xen Orchestra Appliance - a paid version of XO with full support and some
+  extra features like [XOSTOR](https://vates.tech/xostor/) through webGUI
+* **XCP-ng Center** - a windows desktop application, works but abandonware
+  after citrix cut XenCenter devleopment
 
 # Xen Orchestra
 
-![logo](https://i.imgur.com/EuRpfe1.png)
+<!-- ![diagram](https://i.imgur.com/EuRpfe1.png) -->
 
-Unlike esxi or proxmox to which you connect easily after fresh install,
-xcpng used to be just a xen server without any gui.<br>
-They are now adding some XO Lite, but one can as well skip it
+![diagram](https://i.imgur.com/MumtDzU.png)
+
+Unlike esxi or proxmox, to which you connect easily after fresh install,
+xcpng expects you to have XO deployed somewhere and mange xcpng servers with it.<br>
+They are adding XO Lite, but one can as well skip it
 and from the get-go plan to deploy Xen Orchestra somewhere for the managment
 of all xcpng servers.
 
@@ -99,6 +116,10 @@ Vibe is that its kinda abandoned.
 
 </details>
 
+# Installation XCP-ng
+
+![xcpng-statusscree](https://i.imgur.com/iiZlGWa.png)
+
 # Basics 
 
 ### First XO login
@@ -128,6 +149,16 @@ afterwards to upload an iso
 * Import > Disk 
 * To SR: `ISOs`
 
+The storage is created on the root partition.<br>
+This one can be just 18GB if that disk was also selected for
+storing VMs.
+
+### Storage
+
+### GENERAL
+
+`xsconsole`
+
 ### Spin a new VM
 
 Arch Linux 
@@ -152,7 +183,8 @@ https://xcp-ng.org/docs/guests.html#windows
   Advanced > Manage Citrix PV drivers via Windows Update<br>
   but still requires hunt for agent app or something
 
-I use the version `8.2.2.200-RC1` from github.
+I use the version `8.2.2.200-RC1` from github
+* download ISO; run setup.exe; restart
 
 #### Arch
 
@@ -162,16 +194,22 @@ I use the version `8.2.2.200-RC1` from github.
 
 # Passthrough
 
-Recent version made it super easy.
+![passthrough-pic](https://i.imgur.com/nLNT9iH.gif)
+
+When you want to give a virtual machine direct full hardware access to some device.<br>
+Since v8.3 it is very easy to do through webGUI.
 
 #### intel igpu passthrough
 
-* XO webgui
-* Home > Hosts > the-host > Advanced > PCI Devices<br>
-  enable slidder next to VGA compatible controller
-* reboot the host, afterwards go check if the slider is on
-* Home > VMs > Advanced ><br>
-  at the end is `Attach PCIs` button, there should be igpu listed.
+* On the server host
+  * Home > Hosts > the-host > Advanced > PCI Devices<br>
+    Enable slidder next to VGA compatible controller
+  * Reboot the host, go check if the slider is on
+* On the Virtual Machine
+  * Home > VMs > the-vm > Advanced ><br>
+    At the end a button - `Attach PCIs`, there pick the igpu listed.
+
+In VM you can check with `lspci | grep -i vga`
 
 Tested with jellyfin and enabled transcoding,
 monitored with btop and intel_gpu_htop.
@@ -206,4 +244,21 @@ After reboot of the VM I had igpu in and successfully used it in jellyfin.
 
 # Backups 
 
+[lawrance video](https://youtu.be/weVoKm8kDb4?si=3YgoQUvYx4I2a_7u)
+
+So far seems 
+
 https://xen-orchestra.com/docs/backups.html#interface
+
+Veeam Support - [seems](https://forums.veeam.com/veeam-backup-replication-f2/xcp-ng-support-t93030-60.html#p531802)
+theres a prototype and positive response from veeam developers.
+
+## create a remote
+
+* Settings > Remotes
+* NFS or Local or SMB
+* ...
+
+## Create a backkup job
+
+* Backup > New > VM Backup & Replication
