@@ -6,7 +6,12 @@
 
 # Purpose & Overview
 
-An opensource virtualization platform build around
+A hyperviso rbased around Xen to host virtual machines.
+An alternative to vmware esxi, or proxmox, or hyper-v.
+Opensource.
+
+
+A virtualization platform build around
 [Xen](https://en.wikipedia.org/wiki/Xen) a type 1 **hypervisor**.<br>
 An alternative to vmware esxi/vsphere, or hyper-v, or proxmox.
 
@@ -224,16 +229,19 @@ monitored with btop and intel_gpu_htop.
 * pick the device you want, note the HW address at the begining,
   in this case it was `0000:00:02.0`
 * hide the device from the system<br>
-  `opt/xensource/libexec/xen-cmdline --set-dom0 "xen-pciback.hide=(0000:00:02.0)"`
+  `/opt/xensource/libexec/xen-cmdline --set-dom0 "xen-pciback.hide=(0000:00:02.0)"`
   * be aware, the command is overrwriting the current blacklist,
     so for multiple devices it would be<br>
-    `opt/xensource/libexec/xen-cmdline --set-dom0 "xen-pciback.hide=(0000:00:02.0)(0000:00:01.0)"`
+    `/opt/xensource/libexec/xen-cmdline --set-dom0 "xen-pciback.hide=(0000:00:02.0)(0000:00:01.0)"`
 * reboot the hypervisor
 * can use command `xl pci-assignable-list` to check device that can be passthrough    
-* through gui Home > VMs > Advanced ><br>
-  at the end is `Attach PCIs` button, there should be igpu listed.
 
 After reboot of the VM I had igpu in and successfully used it in jellyfin.
+
+### amd igpu passthrough
+
+`udevadm info --query=all --name=/dev/dri/renderD128`
+`dmesg | grep -i amdgpu` - if loaded correctly
 
 </details>
 
